@@ -1,24 +1,25 @@
-const products = [
-{
-name:"Product 1",
-price:100
-},
-{
-name:"Product 2",
-price:200
+async function loadProducts() {
+
+  const response = await fetch("/.netlify/functions/products");
+
+  const products = await response.json();
+
+  const container = document.getElementById("products");
+
+  container.innerHTML = "";
+
+  products.forEach(product => {
+
+    container.innerHTML += `
+      <div class="card">
+        <h2>${product.name}</h2>
+        <p class="price">₱${product.price}</p>
+        <button>Buy Now</button>
+      </div>
+    `;
+
+  });
+
 }
-];
 
-const container = document.getElementById("products");
-
-products.forEach(product=>{
-
-container.innerHTML += `
-<div class="card">
-<h2>${product.name}</h2>
-<p>₱${product.price}</p>
-<button>Buy Now</button>
-</div>
-`;
-
-});
+loadProducts();
